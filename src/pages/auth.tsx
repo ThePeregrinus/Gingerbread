@@ -20,29 +20,29 @@ export function Auth() {
     const [isError, setIsError] = useState(false)
     const {token, setToken} = useContext(TokenContext)
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    try{
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
+        try{
+        event.preventDefault();
+        const data = new FormData(event.currentTarget);
 
-    const json = JSON.stringify({
-      username: data.get("username"),
-      password: data.get("password"),
-    })
-    console.log(json)
+        const json = JSON.stringify({
+        username: data.get("username"),
+        password: data.get("password"),
+        })
+        console.log(json)
 
-    const res = await instance.post(URL.AUTH, json)
-    console.log(res)
+        const res = await instance.post(URL.AUTH, json)
+        console.log(res)
 
-    if(res.data.error_code !== 0){
-        setIsError(true)
-    }
-    else {
-        setToken(res.data.data.token)
-    }
-    
-    }catch(e){
-        throw new Error(`Something wrong when try fetching, ${e}`)
-    }
+        if(res.data.error_code !== 0){
+            setIsError(true)
+        }
+        else {
+            setToken(res.data.data.token)
+        }
+        
+        }catch(e){
+            throw new Error(`Something wrong when try fetching, ${e}`)
+        }
   };
 
   if(token){

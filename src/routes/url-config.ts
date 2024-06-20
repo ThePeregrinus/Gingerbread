@@ -3,7 +3,7 @@ import axios from "axios";
 export const instance = axios.create({
   baseURL: "https://test.v5.pryaniky.com",
   headers: {
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
   }
 });
 
