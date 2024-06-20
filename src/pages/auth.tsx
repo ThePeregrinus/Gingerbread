@@ -1,17 +1,16 @@
-import { useState } from "react";
-
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
+import { Alert, AlertTitle } from "@mui/material";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import Checkbox from "@mui/material/Checkbox";
 import Container from "@mui/material/Container";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Link from "@mui/material/Link";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+import { useState} from "react";
 
 import { instance } from "../routes/url-config";
 import { URL } from "../routes/url-config";
-import { Alert, AlertTitle } from "@mui/material";
 
 export function Auth() {
     const [isError, setIsError] = useState(false)
