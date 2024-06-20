@@ -7,14 +7,18 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Link from "@mui/material/Link";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { useState} from "react";
+import { useState, useContext} from "react";
+import { TokenContext } from "../context";
 
 import { instance } from "../routes/url-config";
 import { URL } from "../routes/url-config";
+import { PathConstants } from "../routes";
+
+import { Navigate } from "react-router-dom";
 
 export function Auth() {
     const [isError, setIsError] = useState(false)
-
+    const {token, setToken} = useContext(TokenContext)
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     try{
     event.preventDefault();
@@ -32,11 +36,19 @@ export function Auth() {
     if(res.data.error_code !== 0){
         setIsError(true)
     }
+    else {
+        setToken(res.data.data.token)
+    }
     
     }catch(e){
         throw new Error(`Something wrong when try fetching, ${e}`)
     }
   };
+
+  if(token){
+    return <Navigate to={PathConstants.TABLE}/>
+  }
+
 
   return (
     <Container component="main" maxWidth="xs">

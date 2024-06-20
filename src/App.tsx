@@ -7,6 +7,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { TokenContext } from "./context";
 import { Auth } from "./pages/auth";
 import { PathConstants } from "./routes";
+import { Table } from "./pages/table";
 
 function App() {
   const [token, setToken] = useState('');
@@ -16,6 +17,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path={PathConstants.HOME} element={<Auth />} />
+          <Route path={PathConstants.TABLE} element={<Table/>} /> 
         </Routes>
       </BrowserRouter>
       </TokenContext.Provider>
