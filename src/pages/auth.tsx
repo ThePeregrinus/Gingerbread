@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -7,14 +9,34 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 
+import { instance } from "../routes/url-config";
+import { URL } from "../routes/url-config";
+import { Alert, AlertTitle } from "@mui/material";
+
 export function Auth() {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const [isError, setIsError] = useState(false)
+
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    try{
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
+
+    const json = JSON.stringify({
       username: data.get("username"),
       password: data.get("password"),
-    });
+    })
+    console.log(json)
+
+    const res = await instance.post(URL.AUTH, json)
+    console.log(res)
+
+    if(res.data.error_code !== 0){
+        setIsError(true)
+    }
+    
+    }catch(e){
+        throw new Error(`Something wrong when try fetching, ${e}`)
+    }
   };
 
   return (
@@ -39,6 +61,7 @@ export function Auth() {
             label="Username"
             name="username"
             autoComplete="username"
+            defaultValue="username13"
             autoFocus
           />
           <TextField
@@ -50,6 +73,7 @@ export function Auth() {
             type="password"
             id="password"
             autoComplete="current-password"
+            defaultValue="password"
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
@@ -61,10 +85,15 @@ export function Auth() {
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
-            Sign In
+            Login
           </Button>
         </Box>
       </Box>
+      {isError && <Alert severity="warning">
+  <AlertTitle sx={{ width: '300px',}} >Warning</AlertTitle>
+    Wrong username or password. Try again. 
+</Alert> }
+
       <Typography variant="body2" color="text.secondary" align="center">
         <Link color="inherit" href="#">
           Gingerbread

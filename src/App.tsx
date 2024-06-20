@@ -3,6 +3,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { Auth } from "./pages/auth";
 import { PathConstants } from "./routes";
 import "./App.css";
+import { useContext, useState } from "react";
 
 function App() {
   return (
