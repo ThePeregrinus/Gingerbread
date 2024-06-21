@@ -7,14 +7,13 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Link from "@mui/material/Link";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { useState, useContext} from "react";
-import { TokenContext } from "../context";
+import { useContext,useState} from "react";
+import { Navigate } from "react-router-dom";
 
+import { TokenContext } from "../context";
+import { PathConstants } from "../routes";
 import { instance } from "../routes/url-config";
 import { URL } from "../routes/url-config";
-import { PathConstants } from "../routes";
-
-import { Navigate } from "react-router-dom";
 
 export function Auth() {
     const [isError, setIsError] = useState(false)

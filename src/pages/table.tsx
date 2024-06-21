@@ -1,15 +1,83 @@
-import { useContext,useEffect } from "react";
+import { Box} from "@mui/material";
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { useContext,useEffect, useState } from "react";
 import {Navigate} from 'react-router-dom'
+
+import { AppBarMenu } from "../components/appbar";
 import { TokenContext } from "../context";
 import { PathConstants } from "../routes";
 import { instance } from "../routes/url-config";
 import { URL } from "../routes/url-config";
 
-
-
 export function Table(){
     const {token, setToken} = useContext(TokenContext)
+    const [data, setData] = useState<Array<any>>([])
 
+    const columns: GridColDef<(typeof rows)[number]>[] = [
+        { field: 'id', headerName: 'ID', width: 90 },
+        {
+          field: 'companySigDate',
+          headerName: 'companySigDate',
+          width: 150,
+          editable: true,
+        },
+        {
+          field: 'companySignatureName',
+          headerName: 'companySignatureName',
+          width: 150,
+          editable: true,
+        },
+        {
+          field: 'documentName',
+          headerName: 'documentName',
+          width: 150,
+          editable: true,
+        },
+        {
+            field: 'documentStatus',
+            headerName: 'documentStatus',
+            width: 150,
+            editable: true,
+          },
+          {
+            field: 'documentType',
+            headerName: 'documentType',
+            width: 150,
+            editable: true,
+          },
+          {
+            field: 'employeeNumber',
+            headerName: 'employeeNumber',
+            width: 150,
+            editable: true,
+          },
+          
+          {
+            field: 'employeeSigDate',
+            headerName: 'employeeSigDate',
+            width: 150,
+            editable: true,
+          },
+          {
+            field: 'employeeSignatureName',
+            headerName: 'employeeSignatureName',
+            width: 150,
+            editable: true,
+          },
+      ];
+
+      const rows = [
+        { id: 1, companySignatureName: 'Snow', companySigDate: 'Jon', documentName: 14, documentStatus:'st', documentType:'doctype',employeeSigDate:'emsig', employeeSignatureName:'signmee' },
+        { id: 2, companySignatureName: 'Lannister',companySigDate: 'Cersei', documentName: 31, documentStatus:'st', documentType:'doctype',employeeSigDate:'emsig', employeeSignatureName:'signmee' },
+        { id: 3, companySignatureName: 'Lannister', companySigDate: 'Jaime', documentName: 31, documentStatus:'st' , documentType:'doctype',employeeSigDate:'emsig', employeeSignatureName:'signmee'},
+        { id: 4, companySignatureName: 'Stark', companySigDate: 'Arya', documentName: 11, documentStatus:'st', documentType:'doctype',employeeSigDate:'emsig', employeeSignatureName:'signmee' },
+        { id: 5, companySignatureName: 'Targaryen', companySigDate: 'Daenerys', documentName: null, documentStatus:'st' , documentType:'doctype',employeeSigDate:'emsig', employeeSignatureName:'signmee'},
+        { id: 6, companySignatureName: 'Melisandre', companySigDate: null, documentName: 150, documentStatus:'st', documentType:'doctype',employeeSigDate:'emsig' , employeeSignatureName:'signmee'},
+        { id: 7, companySignatureName: 'Clifford', companySigDate: 'Ferrara', documentName: 44, documentStatus:'st' , documentType:'doctype',employeeSigDate:'emsig', employeeSignatureName:'signmee'},
+        { id: 8, companySignatureName: 'Frances', companySigDate: 'Rossini', documentName: 36 , documentStatus:'st', documentType:'doctype',employeeSigDate:'emsizcg', employeeSignatureName:'signmee'},
+        { id: 9, companySignatureName: 'Roxie', companySigDate: 'Harvey', documentName: 65 , documentStatus:'st', documentType:'doctype',employeeSigDate:'emsig', employeeSignatureName:'signmee'},
+      ];  
+      
     const getData = async (token:string) =>{
         try{
             if(token){
@@ -95,11 +163,32 @@ export function Table(){
         //     "employeeNumber": "не работник", 
         //     "employeeSignatureName": "не test" 
         // }).then((res)=>console.log(res, 123)).catch((e)=>console.log(e)))
+
+        
+
     })
 
     if(!token){
         return <Navigate to={PathConstants.HOME} />
     }
-    return <h1>hello</h1>
+    return <>
+    <AppBarMenu/>
+    <Box sx={{ height: 400, width: '100%' }}>
+      <DataGrid
+        rows={rows}
+        columns={columns}
+        initialState={{
+          pagination: {
+            paginationModel: {
+              pageSize: 5,
+            },
+          },
+        }}
+        pageSizeOptions={[5]}
+        checkboxSelection
+        disableRowSelectionOnClick
+      />
+    </Box>
+    </>
     
 }
