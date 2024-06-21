@@ -1,5 +1,10 @@
 import { Button } from "@mui/material"
+import { useContext} from "react"
+
+import { Context } from "../context"
+import { addData } from "../utils/add-data"
 
 export const AddRow = () =>{
-    return <Button color="inherit"> Add new row</Button>
+    const {toogle, setToogle} = useContext(Context)
+    return <Button color="inherit" onClick={()=>{setToogle(!toogle)}}> Add new row</Button>
 }

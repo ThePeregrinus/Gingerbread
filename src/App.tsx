@@ -4,23 +4,24 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-import { TokenContext } from "./context";
+import { Context } from "./context";
 import { Auth } from "./pages/auth";
 import { Table } from "./pages/table";
 import { PathConstants } from "./routes";
 
 function App() {
   const [token, setToken] = useState('');
+  const [toogle, setToogle] = useState(true)
   return (
     <CssBaseline>
-      <TokenContext.Provider value={{token, setToken }}>
+      <Context.Provider value={{token, setToken, toogle, setToogle  }}>
       <BrowserRouter>
         <Routes>
           <Route path={PathConstants.HOME} element={<Auth />} />
           <Route path={PathConstants.TABLE} element={<Table/>} /> 
         </Routes>
       </BrowserRouter>
-      </TokenContext.Provider>
+      </Context.Provider>
     </CssBaseline>
   );
 }

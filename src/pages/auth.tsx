@@ -10,14 +10,14 @@ import Typography from "@mui/material/Typography";
 import { useContext,useState} from "react";
 import { Navigate } from "react-router-dom";
 
-import { TokenContext } from "../context";
+import { Context } from "../context";
 import { PathConstants } from "../routes";
 import { instance } from "../routes/url-config";
 import { URL } from "../routes/url-config";
 
 export function Auth() {
     const [isError, setIsError] = useState(false)
-    const {token, setToken} = useContext(TokenContext)
+    const {token, setToken} = useContext(Context)
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         try{
         event.preventDefault();

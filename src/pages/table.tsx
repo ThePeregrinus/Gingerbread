@@ -7,16 +7,17 @@ import {Navigate} from 'react-router-dom'
 import { AppBarMenu } from "../components/appbar";
 import { DeleteButton } from '../components/delete-button';
 import { EditButton } from "../components/edit-button";
-import { TokenContext } from "../context";
+import { Context } from "../context";
 import { PathConstants } from "../routes";
 import { instance } from "../routes/url-config";
 import { URL } from "../routes/url-config";
+import { getData } from "../utils/get-data";
 
 export function Table(){
-    const {token, setToken} = useContext(TokenContext)
+    const {token, setToken, toogle, setToogle} = useContext(Context)
     const [data, setData] = useState<Array<any>>([])
-    const [toogle, setToogle] = useState(true)
-    
+
+
     const columns: GridColDef<(typeof rows)[number]>[] = [
         {field: 'delete', headerName: '', width:70, sortable: false, renderCell: ()=> <DeleteButton/>},
         {field: 'setting', headerName: '',  sortable: false, renderCell: ()=> <EditButton/>},
@@ -74,57 +75,9 @@ export function Table(){
       
       const rows = data.map((column, icolumn)=>{return {...column, id:icolumn + 1}});
       
-    const getData = async (token:string) =>{
-        try{
-            if(token){
-                return await instance.get(URL.GET_DATA,{headers:{
-                    'x-auth':token
-                }})
-            }
-        }
-        catch(e){
-            throw new Error(e as string)
-        }
-    }
 
-    const addData = async (token:string) =>{
-        try{
-            if(token){
-                const time = new Date().toISOString() +'\t'
-                const json = JSON.stringify({ 
-                    "companySigDate": {time}, 
-                    "companySignatureName": "энилоуп", 
-                    "documentName": "энвилоупнейм", 
-                    "documentStatus": "статус", 
-                    "documentType": "тип", 
-                    "employeeNumber": "работник", 
-                    "employeeSigDate": {time}, 
-                    "employeeSignatureName": "test" 
-                }
-                )
-                return await instance.post(URL.ADD_DATA, json, {headers:{
-                    'x-auth':token
-                },})
-            }
-        }
-        catch(e){
-            throw new Error(e as string)
-        }
-    }
 
-    // CANT FIND DOCUMENT EVEN WITH POSTMAN
-    const deletedData =  async (token:string, id:string) =>{
-        try{
-            if(token){
-                return await instance.post(URL.DELETE_DATA + id, {headers:{
-                    'x-auth':token
-                },})
-            }
-        }
-        catch(e){
-            throw new Error(e as string)
-        }
-    }
+
 
     // RETURNS 200 OK BUT NOTHING HAPPENS
     const changeData = async (token:string, id:string, json: object) =>{
@@ -144,8 +97,9 @@ export function Table(){
     
     useEffect(()=>{
         // OK
+         console.log('fetching')
          getData(token).then(res=>setData(res?.data.data))
-         console.log(data)
+        
         // //console.log(addData(token).then(res=>console.log('resADD', res)))
 
         // ERROR
@@ -163,14 +117,14 @@ export function Table(){
 
         
 
-    }, [])
+    }, [toogle])
 
     if(!token){
         return <Navigate to={PathConstants.HOME} />
     }
     return <>
     <AppBarMenu/>
-    <Box sx={{ height: 400, width: '100%' }}>
+    <Box sx={{ height: 600, width: '100%' }}>
       <DataGrid  
         rows={rows}
         columns={columns}

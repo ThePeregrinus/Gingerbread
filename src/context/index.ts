@@ -1,5 +1,5 @@
 import { createContext } from "react";
 
-import { IToken } from "../types";
+import {IContext } from "../types";
 
-export const TokenContext = createContext<IToken>({token:'', setToken: ()=>{}})
+export const Context = createContext<IContext>({token:'', setToken: ()=>{},  toogle:true, setToogle: ()=>{}})
