@@ -1,9 +1,12 @@
+
 import { Box} from "@mui/material";
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { useContext,useEffect, useState } from "react";
 import {Navigate} from 'react-router-dom'
 
 import { AppBarMenu } from "../components/appbar";
+import { DeleteButton } from '../components/delete-button';
+import { EditButton } from "../components/edit-button";
 import { TokenContext } from "../context";
 import { PathConstants } from "../routes";
 import { instance } from "../routes/url-config";
@@ -12,8 +15,11 @@ import { URL } from "../routes/url-config";
 export function Table(){
     const {token, setToken} = useContext(TokenContext)
     const [data, setData] = useState<Array<any>>([])
-
+    const [toogle, setToogle] = useState(true)
+    
     const columns: GridColDef<(typeof rows)[number]>[] = [
+        {field: 'delete', headerName: '', width:70, sortable: false, renderCell: ()=> <DeleteButton/>},
+        {field: 'setting', headerName: '',  sortable: false, renderCell: ()=> <EditButton/>},
         { field: 'id', headerName: 'ID', width: 90 },
         {
           field: 'companySigDate',
@@ -65,18 +71,8 @@ export function Table(){
             editable: true,
           },
       ];
-
-      const rows = [
-        { id: 1, companySignatureName: 'Snow', companySigDate: 'Jon', documentName: 14, documentStatus:'st', documentType:'doctype',employeeSigDate:'emsig', employeeSignatureName:'signmee' },
-        { id: 2, companySignatureName: 'Lannister',companySigDate: 'Cersei', documentName: 31, documentStatus:'st', documentType:'doctype',employeeSigDate:'emsig', employeeSignatureName:'signmee' },
-        { id: 3, companySignatureName: 'Lannister', companySigDate: 'Jaime', documentName: 31, documentStatus:'st' , documentType:'doctype',employeeSigDate:'emsig', employeeSignatureName:'signmee'},
-        { id: 4, companySignatureName: 'Stark', companySigDate: 'Arya', documentName: 11, documentStatus:'st', documentType:'doctype',employeeSigDate:'emsig', employeeSignatureName:'signmee' },
-        { id: 5, companySignatureName: 'Targaryen', companySigDate: 'Daenerys', documentName: null, documentStatus:'st' , documentType:'doctype',employeeSigDate:'emsig', employeeSignatureName:'signmee'},
-        { id: 6, companySignatureName: 'Melisandre', companySigDate: null, documentName: 150, documentStatus:'st', documentType:'doctype',employeeSigDate:'emsig' , employeeSignatureName:'signmee'},
-        { id: 7, companySignatureName: 'Clifford', companySigDate: 'Ferrara', documentName: 44, documentStatus:'st' , documentType:'doctype',employeeSigDate:'emsig', employeeSignatureName:'signmee'},
-        { id: 8, companySignatureName: 'Frances', companySigDate: 'Rossini', documentName: 36 , documentStatus:'st', documentType:'doctype',employeeSigDate:'emsizcg', employeeSignatureName:'signmee'},
-        { id: 9, companySignatureName: 'Roxie', companySigDate: 'Harvey', documentName: 65 , documentStatus:'st', documentType:'doctype',employeeSigDate:'emsig', employeeSignatureName:'signmee'},
-      ];  
+      
+      const rows = data.map((column, icolumn)=>{return {...column, id:icolumn + 1}});
       
     const getData = async (token:string) =>{
         try{
@@ -148,7 +144,8 @@ export function Table(){
     
     useEffect(()=>{
         // OK
-        // console.log('getData', getData(token).then(res=>console.log('resGET', res)))
+         getData(token).then(res=>setData(res?.data.data))
+         console.log(data)
         // //console.log(addData(token).then(res=>console.log('resADD', res)))
 
         // ERROR
@@ -166,7 +163,7 @@ export function Table(){
 
         
 
-    })
+    }, [])
 
     if(!token){
         return <Navigate to={PathConstants.HOME} />
@@ -174,7 +171,7 @@ export function Table(){
     return <>
     <AppBarMenu/>
     <Box sx={{ height: 400, width: '100%' }}>
-      <DataGrid
+      <DataGrid  
         rows={rows}
         columns={columns}
         initialState={{
@@ -185,7 +182,7 @@ export function Table(){
           },
         }}
         pageSizeOptions={[5]}
-        checkboxSelection
+
         disableRowSelectionOnClick
       />
     </Box>
