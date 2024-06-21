@@ -19,9 +19,9 @@ export function Table(){
 
 
     const columns: GridColDef<(typeof rows)[number]>[] = [
-        {field: 'delete', headerName: '', width:70, sortable: false, renderCell: ()=> <DeleteButton/>},
-        {field: 'setting', headerName: '',  sortable: false, renderCell: ()=> <EditButton/>},
-        { field: 'id', headerName: 'ID', width: 90 },
+        {field: 'delete', headerName: 'Delete', width:70, sortable: false, renderCell: (row)=> <DeleteButton id={row.row.id}/>},
+        {field: 'setting', headerName: 'Setting',  sortable: false, renderCell: (row)=> <EditButton id={row.row.id}/>},
+        { field: 'numeric', headerName: 'ID', width: 90 },
         {
           field: 'companySigDate',
           headerName: 'companySigDate',
@@ -73,7 +73,8 @@ export function Table(){
           },
       ];
       
-      const rows = data.map((column, icolumn)=>{return {...column, id:icolumn + 1}});
+      console.log(data)
+      const rows = data.map((column, icolumn)=>{return {...column, numeric:icolumn + 1}});
       
 
 

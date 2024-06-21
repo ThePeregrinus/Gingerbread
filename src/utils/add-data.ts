@@ -4,15 +4,15 @@ import { URL } from "../routes/url-config"
 export const addData = async (token:string) =>{
     try{
         if(token){
-            const time = new Date().toISOString() +'\t'
+            const time = new Date().toISOString()
             const json = JSON.stringify({ 
-                "companySigDate": {time}, 
+                "companySigDate": `${time+'\t'}`, 
                 "companySignatureName": "энилоуп", 
                 "documentName": "энвилоупнейм", 
                 "documentStatus": "статус", 
                 "documentType": "тип", 
                 "employeeNumber": "работник", 
-                "employeeSigDate": {time}, 
+                "employeeSigDate": `${time+'\t'}`, 
                 "employeeSignatureName": "test" 
             }
             )
