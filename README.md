@@ -1,30 +1,37 @@
-# React + TypeScript + Vite
+# Gingerbread
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+SPA with some requirements:
+<details>
+  <summary>Click me</summary>
 
-Currently, two official plugins are available:
+* Pages:
+  * Login page
+  * Table with data received from the server
+  * Table must provide CRUD 
+* Behavior of the application functions:
+  * An unauthorized user should be prompted to log in when opening applications.
+  * After successful authorization, the user should see a table with data.
+  * After reloading the page the user must remain logged in
+  * Ability to add a new record to the table
+  * The new entry in the table should appear immediately
+  * Ability to delete an entry
+  * The deleted record should immediately disappear from the table
+  * Ability to change entry
+  * Changes should be immediately reflected in the table
+  * The application must correctly inform the user about errors in filling out forms or unsuccessful requests to the server
+  * While receiving and sending data to the server, the user should be shown indicators of the loading/sending process (progress bars, spinners) of data
+</details>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# Installation
+At least you need [Node.js](https://nodejs.org/en) 
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: "latest",
-    sourceType: "module",
-    project: ["./tsconfig.json", "./tsconfig.node.json"],
-    tsconfigRootDir: __dirname,
-  },
-};
+run these commands
+```
+npm install
+npm run dev
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+# Stack 
+* React
+* TypeScript
+* MUI
