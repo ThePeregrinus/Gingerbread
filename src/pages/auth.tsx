@@ -22,6 +22,7 @@ export function Auth() {
         try{
         event.preventDefault();
         const data = new FormData(event.currentTarget);
+        console.log('data',data)
 
         const json = JSON.stringify({
         username: data.get("username"),
@@ -100,7 +101,7 @@ export function Auth() {
         </Box>
       </Box>
       {isError && <Alert severity="warning">
-  <AlertTitle sx={{ width: '300px',}} >Warning</AlertTitle>
+  <AlertTitle sx={{ width: '300px'}} >Warning</AlertTitle>
     Wrong username or password. Try again. 
 </Alert> }
 

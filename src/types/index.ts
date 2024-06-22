@@ -7,4 +7,10 @@ export interface IContext {
     toogle: boolean,
     setToogle :Dispatch<SetStateAction<boolean>>
   }
+
+ export interface IModal{
+    open: boolean
+    setOpen: Dispatch<SetStateAction<boolean>>
+  }
+  
   
