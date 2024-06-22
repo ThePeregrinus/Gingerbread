@@ -136,7 +136,6 @@ export const BasicModal = ({
               size="large"
               fullWidth
             >
-              {" "}
               {createMode ? "create" : "edit"}{" "}
             </Button>
           </Box>

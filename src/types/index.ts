@@ -24,5 +24,5 @@ export interface IModal {
   setOpen: Dispatch<SetStateAction<boolean>>;
   createMode?: boolean;
   id?: string;
-  row: Irow;
+  row?: Irow;
 }

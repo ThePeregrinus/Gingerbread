@@ -15,8 +15,7 @@ export const DeleteButton = ({ id }: { id: string }) => {
 
   return (
     <Button color="inherit" onClick={handleClick}>
-      {" "}
-      <DeleteIcon />{" "}
+      <DeleteIcon />
     </Button>
   );
 };

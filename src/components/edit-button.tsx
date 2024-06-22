@@ -15,8 +15,7 @@ export const EditButton = ({ id, row }: { id: string; row: Irow }) => {
   return (
     <>
       <Button color="inherit" onClick={setOpen}>
-        {" "}
-        <SettingsIcon />{" "}
+        <SettingsIcon />
       </Button>
       <BasicModal
         open={isOpen}
