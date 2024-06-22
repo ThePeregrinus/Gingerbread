@@ -5,8 +5,9 @@ import { Navigate } from "react-router-dom";
 import { Context } from "../context";
 import { PathConstants } from "../routes";
 export const Logout = () =>{
-    const {token, setToken} = useContext(Context)
+    const {setToken} = useContext(Context)
     const exit = () =>{
+        localStorage.setItem('token', '')
         setToken('')
         return <Navigate to =  {PathConstants.HOME} />
     }

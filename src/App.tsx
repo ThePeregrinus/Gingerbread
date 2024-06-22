@@ -8,9 +8,8 @@ import { Context } from "./context";
 import { Auth } from "./pages/auth";
 import { Table } from "./pages/table";
 import { PathConstants } from "./routes";
-
 function App() {
-  const [token, setToken] = useState('');
+  const [token, setToken] =  useState(localStorage.getItem('token') || '');
   const [toogle, setToogle] = useState(true)
   return (
     <CssBaseline>

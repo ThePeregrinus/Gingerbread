@@ -1,9 +1,7 @@
 import { Alert, AlertTitle } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import Checkbox from "@mui/material/Checkbox";
 import Container from "@mui/material/Container";
-import FormControlLabel from "@mui/material/FormControlLabel";
 import Link from "@mui/material/Link";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
@@ -22,22 +20,20 @@ export function Auth() {
         try{
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        console.log('data',data)
 
         const json = JSON.stringify({
         username: data.get("username"),
         password: data.get("password"),
         })
-        console.log(json)
 
         const res = await instance.post(URL.AUTH, json)
-        console.log(res)
 
         if(res.data.error_code !== 0){
             setIsError(true)
         }
         else {
             setToken(res.data.data.token)
+            localStorage.setItem('token', res.data.data.token)
         }
         
         }catch(e){
@@ -86,10 +82,7 @@ export function Auth() {
             autoComplete="current-password"
             defaultValue="password"
           />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
+
           <Button
             type="submit"
             fullWidth

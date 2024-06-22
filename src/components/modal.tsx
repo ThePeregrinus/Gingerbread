@@ -2,12 +2,12 @@ import { TextField } from '@mui/material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
-import Typography from '@mui/material/Typography';
 import { useContext } from 'react';
 
 import { Context } from '../context';
 import { IModal } from '../types';
 import { addData } from '../utils/add-data';
+import { changeData } from '../utils/edit-data';
 
 const style = {
   position: 'absolute' as const,
@@ -25,25 +25,30 @@ const style = {
 };
 
 
-export const BasicModal = ({open, setOpen}: IModal)=> {
+export const BasicModal = ({open, setOpen, createMode=true, id, row}: IModal)=> {
    const {token, toogle, setToogle} = useContext(Context)
    const handleClose = () => setOpen(false);
    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const json = JSON.stringify({
+    const inputs = {
       documentStatus: data.get("documentStatus"),
       employeeNumber: data.get("employeeNumber"),
       documentType: data.get("documentType"),
       documentName: data.get("documentName"),
       companySignatureName: data.get("companySignatureName"),
       employeeSignatureName: data.get("employeeSignatureName"),
-     employeeSigDate: data.get("employeeSigDate"),
+      employeeSigDate: data.get("employeeSigDate"),
       companySigDate: data.get("companySigDate"),
-      })
+      }
 
-    console.log(json)
-    addData(token, json)
+    console.log(inputs)
+
+    if(createMode){
+      addData(token, inputs)
+    } else {
+       id && changeData(token, id, inputs)
+    }
     setToogle(!toogle)
     handleClose()
    }
@@ -64,16 +69,16 @@ export const BasicModal = ({open, setOpen}: IModal)=> {
       >
         <form  onSubmit={handleSubmit}>
           <Box sx={style}>
-            <TextField name='documentStatus' label='documentStatus' required autoFocus defaultValue='Signed' placeholder='signed'/>
-            <TextField name='employeeNumber' label='employeeNumber' required defaultValue='1234' placeholder='1234'/>
-            <TextField name='documentType' label='documentType' required defaultValue='Contract' placeholder='Contract'/>
-            <TextField name='documentName' label='documentName' required defaultValue='Contract.pdf' placeholder='Contract.pdf'/>
-            <TextField name='companySignatureName' label='companySignatureName' required defaultValue='companyContract.sig' placeholder='Contract.sig'/>
-            <TextField name='employeeSignatureName' label='employeeSignatureName' required defaultValue='employeeContract.sig'  placeholder='Contract.sig'/>
-            <TextField name='employeeSigDate' label='employeeSigDate' required  defaultValue={time}  placeholder={time}/>
-            <TextField name='companySigDate' label="companySigDate" required  defaultValue={time} placeholder={time}/>
+            <TextField name='documentStatus' label='documentStatus' required autoFocus defaultValue={ row?.documentStatus || 'Signed'} placeholder='signed'/>
+            <TextField name='employeeNumber' label='employeeNumber' required defaultValue={row?.employeeNumber ||'1234'} placeholder='1234'/>
+            <TextField name='documentType' label='documentType' required defaultValue={ row?.documentType||'Contract'} placeholder='Contract'/>
+            <TextField name='documentName' label='documentName' required defaultValue={row?.documentName || 'Contract.pdf'} placeholder='Contract.pdf'/>
+            <TextField name='companySignatureName' label='companySignatureName' required defaultValue={row?.companySignatureName || 'companyContract.sig'} placeholder='Contract.sig'/>
+            <TextField name='employeeSignatureName' label='employeeSignatureName' required defaultValue={row?.employeeSignatureName||'employeeContract.sig'}  placeholder='Contract.sig'/>
+            <TextField name='employeeSigDate' label='employeeSigDate' required  defaultValue={row?.employeeSigDate || time}  placeholder={time}/>
+            <TextField name='companySigDate' label="companySigDate" required  defaultValue={row?.companySigDate || time} placeholder={time}/>
 
-            <Button  type='submit' variant="contained" color="success"  size="large" fullWidth> create </Button>
+            <Button  type='submit' variant="contained" color="success"  size="large" fullWidth> {createMode ? 'create' : 'edit'} </Button>
             </Box>
         </form>
       </Modal>
