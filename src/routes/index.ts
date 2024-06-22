@@ -1,4 +1,4 @@
 export const PathConstants = {
   HOME: "/",
-  TABLE:'/table'
+  TABLE: "/table",
 };

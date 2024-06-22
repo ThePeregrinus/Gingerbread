@@ -9,17 +9,17 @@ import { Auth } from "./pages/auth";
 import { Table } from "./pages/table";
 import { PathConstants } from "./routes";
 function App() {
-  const [token, setToken] =  useState(localStorage.getItem('token') || '');
-  const [toogle, setToogle] = useState(true)
+  const [token, setToken] = useState(localStorage.getItem("token") || "");
+  const [toogle, setToogle] = useState(true);
   return (
     <CssBaseline>
-      <Context.Provider value={{token, setToken, toogle, setToogle  }}>
-      <BrowserRouter>
-        <Routes>
-          <Route path={PathConstants.HOME} element={<Auth />} />
-          <Route path={PathConstants.TABLE} element={<Table/>} /> 
-        </Routes>
-      </BrowserRouter>
+      <Context.Provider value={{ token, setToken, toogle, setToogle }}>
+        <BrowserRouter>
+          <Routes>
+            <Route path={PathConstants.HOME} element={<Auth />} />
+            <Route path={PathConstants.TABLE} element={<Table />} />
+          </Routes>
+        </BrowserRouter>
       </Context.Provider>
     </CssBaseline>
   );
